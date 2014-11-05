@@ -69,10 +69,59 @@
 								<?php
 									//look in file structure to see if there is an animation, game, book, quiz.  This info will be used to work out which icons to show and to calculate percent complete for this question
 									//hard code for now
-									$hasGame=true;
-									$hasAnimation=true;
-									$hasBook=true;
-									$hasQuiz=true;
+
+									$numActivities = 0;
+									$completedActivities = 0;
+									$pathToRoot = dirname(__FILE__) . "/../../";
+									
+									if(file_exists($pathToRoot . "questions/$id/game/game.unity3d"))
+									{
+										$hasGame=true;
+										$numActivities++;
+										//check if it has been completed
+									}
+
+									else
+									{
+										$hasGame=false;
+									}
+
+									if(file_exists($pathToRoot . "questions/$id/animation/animation.mp4"))
+									{
+										$hasAnimation=true;
+										$numActivities++;
+										//check if it has been completed
+									}
+
+									else
+									{
+										$hasAnimation=false;
+									}
+
+									if(file_exists($pathToRoot . "questions/$id/book/book.mp4"))
+									{
+										$hasBook=true;
+										$numActivities++;
+										//check if it has been completed
+									}
+
+									else
+									{
+										$hasBook=false;
+									}
+
+									if(file_exists($pathToRoot . "questions/$id/quiz/quiz.mp4"))
+									{
+										$hasQuiz=true;
+										$numActivities++;
+										//check if it has been completed
+									}
+
+									else
+									{
+										$hasQuiz=false;
+									}
+
 									$completedGame=false;
 									$completedAnimation=false;
 									$completedBook=false;
@@ -90,25 +139,33 @@
 											if($activity=='game')
 											{
 												$completedGame=true;
+												$completedActivities++;
 											}
 
 											else if($activity=='animation')
 											{
 												$completedAnimation=true;
+												$completedActivities++;
 											}
 
 											else if($activity=='book')
 											{
-												$completedBook=true;	
+												$completedBook=true;
+												$completedActivities++;
 											}
 
 											else if($activity=='quiz')
 											{
-												$completedQuiz=true;									
+												$completedQuiz=true;
+												$completedActivities++;									
 											}
 										}
 									}
 
+									$percentPerActivity = ($numActivities) ? 100 / $numActivities : 0;
+									$percentComplete = $percentPerActivity * $completedActivities;
+
+									echo $percentComplete;
 								?>
 								<?php
 									if($hasGame)

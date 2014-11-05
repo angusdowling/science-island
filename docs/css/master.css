@@ -720,7 +720,7 @@
 		/*display: none;*/
 		z-index: 100;
 		background: #ddd;
-		
+		opacity: 0;
 	}
 
 	.ui.dropdown .inner {

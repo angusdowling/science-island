@@ -125,6 +125,7 @@ function RealmClicked( id )
    // document.getElementById('htmlContent').style.display= 'block' ;
 
    // $("#htmlContent").load("/science/docs/php/returnRealmQuestions.php?realmID="+id);
+   
    $("#htmlContent").html( "<iframe id='realmContent' src='/science/docs/php/returnRealmQuestions.php?realmID="+id+"+'></iframe><p><a id='closeiFrame' href='javascript:CloseClicked()''>Close</a></p>" );
 
    $("#htmlContent").slideDown(600);

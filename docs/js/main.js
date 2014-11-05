@@ -7,8 +7,6 @@ var msie = ua.indexOf("MSIE ");
 var app = {
 	init: function(){
 		app.handlers();
-		// app.upgrade();
-		app.initTabs();
 	},
 
 	handlers: function(){
@@ -30,6 +28,12 @@ var app = {
 			e.preventDefault();
 		});
 
+		$('.tabHeadings .item .link').on('click', function(e){
+			app.activityClick( $(this).attr('id'), questionID );
+
+			e.preventDefault();
+		})
+
 		// $('#closeiFrame').on('click', function(e){
 		// 	CloseClicked();
 
@@ -45,7 +49,9 @@ var app = {
 		
 		if(dropdown.hasClass('open'))
 		{
-			dropdown.removeClass('open');
+			dropdown.stop().slideUp(function(){
+				$(this).removeClass('open');
+			});
 
 			ResizeUnity();
 
@@ -58,24 +64,18 @@ var app = {
 			{
 				alldds.removeClass('open');
 				dropdown.addClass('open');
-
-				alldds.hide();
-				dropdown.show();
 			}
 
 			else {
-				dropdown.addClass('open');
+
+				dropdown.stop().slideDown(function(){
+					$(this).addClass('open');
+				});
+				
 				ResizeUnity();
 
 				$('#unityPlayer').addClass('open');
 			}
-		}
-	},
-
-	initTabs: function(){
-		if($( "#tabs")[0])
-		{
-			$( "#tabs" ).tabs();
 		}
 	},
 
@@ -91,6 +91,25 @@ var app = {
 	switchToRealm: function(){
 		$('.ui.questions.container').hide();
 		$('.ui.layout.realm').show();
+	},
+
+	activityClick: function( string, id ){
+		var container = $('#questionContent');
+
+		switch(string){
+			case "gameTab":
+				container.load('/science/docs/php/returnGame.php?questionID='+id);
+				break;
+			case "animationTab":
+				container.load('/science/docs/php/returnAnimation.php?questionID='+id);
+				break;
+			case "bookTab":
+				container.load('/science/docs/php/returnBook.php?questionID='+id);
+				break;
+			case "quizTab":
+				container.load('/science/docs/php/returnQuiz.php?questionID='+id);
+				break;
+		}
 	}
 
 	// upgrade: function()

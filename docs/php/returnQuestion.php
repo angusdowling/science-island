@@ -11,12 +11,13 @@
 	<!-- /Styles -->
 	
 	<script src="/science/docs/js/jquery-1.11.1.js" type="text/javascript"></script>
-	<script type="text/javascript" src="http://w2ui.com/src/w2ui-1.4.1.min.js"></script>
-	<script src="/science/docs/js/jquery-ui.min.js" type="text/javascript"></script>
+	<script type='text/javascript' src='https://ssl-webplayer.unity3d.com/download_webplayer-3.x/3.0/uo/jquery.min.js'></script>
+	<script type='text/javascript' src='http://webplayer.unity3d.com/download_webplayer-3.x/3.0/uo/UnityObject2.js'></script>
 
 </head>
 
-<body onload="parent.resizeIframe(document.body.scrollHeight)">
+<!-- <body onload="parent.resizeIframe(document.body.scrollHeight)"> -->
+<body>
 
 	<?php
 		error_reporting(0);
@@ -27,10 +28,10 @@
 
 		$questionID=make_safe($_REQUEST['questionID']);
 
-		$query="SELECT * FROM questions WHERE questionID=$questionID";
-		$result=mysql_query($query);
+		$link=dbConnect();
 
-		echo $result;
+		$query="SELECT * FROM questions WHERE id=$questionID";
+		$result=mysql_query($query);
 
 		if($result && mysql_num_rows($result) == 1)
 		{
@@ -39,6 +40,7 @@
 			$title=$row['title'];
 			$description=$row['description'];
 	?>
+	<script> var questionID = <?php echo $id; ?>;</script>
 
 	<div class="ui questions container">
 		<div class="ui constrained">
@@ -49,31 +51,20 @@
 			<div id="tabs">
 				<ul class="tabHeadings clearfix">
 					<li class="item">
-						<a class="link" href="#tabGame">Game</a>
+						<a id="gameTab" class="link" href="#tabGame">Game</a>
 					</li>
 					<li class="item">
-						<a class="link" href="#tabAnimation">Animation</a>
+						<a id="animationTab" class="link" href="#tabAnimation">Animation</a>
 					</li>
 					<li class="item">
-						<a class="link" href="#tabBook">Book</a>
+						<a id="bookTab" class="link" href="#tabBook">Book</a>
 					</li>
 					<li class="item">
-						<a class="link" href="#tabQuiz">Quiz</a>
+						<a id="quizTab" class="link" href="#tabQuiz">Quiz</a>
 					</li>
 				</ul>
-				<div id="tabGame" class="tabBody">
-					<p>Put game here</p>
-				</div>
-				<div id="tabAnimation" class="tabBody">
-					<iframe width="420" height="315" src="//www.youtube.com/embed/XQu8TTBmGhA" frameborder="0" allowfullscreen></iframe>
-				</div>
-				<div id="tabBook" class="tabBody">
-					<p>Put book here</p>
-				</div>
-				<div id="tabQuiz" class="tabBody">
-					<p>Put quiz here</p>
-				</div>
 			</div>
+			<div id="questionContent"></div>
 		</div>
 		<a class="ui navigate toRealm" href="#">Back to realm</a>
 	</div>

@@ -14,9 +14,11 @@
     <script>
      function resizeIframe( newHeight ){
         $('#realmContent').css('height', parseInt(newHeight, 10) + 100 + 'px').slideDown(300);
-
-
      }
+    </script>
+
+    <script>
+        var thisVariable = <?php $blue ?>;
     </script>
 </head>
 
